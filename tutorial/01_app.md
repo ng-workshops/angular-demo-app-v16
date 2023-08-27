@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   styleUrls: ['./app.component.scss'],
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
 })
 export class AppComponent {
   showDetails = false;
@@ -17,10 +17,10 @@ export class AppComponent {
     id: 1,
     name: 'Simpson',
     firstname: 'Homer',
-    hobbies: ['eat', 'sleep', 'beer']
+    hobbies: ['eat', 'sleep', 'beer'],
   };
 
-  callMe(phone) {
+  callMe(phone: string) {
     alert(`Please call this number: ${phone}`);
   }
 }
@@ -41,9 +41,7 @@ export class AppComponent {
 <button (click)="showDetails = !showDetails">
   {{ showDetails ? 'Hide' : 'Show'}} the secret message
 </button>
-<span [hidden]="!showDetails">
-  My phone number is 123 456 7890
-</span>
+<span [hidden]="!showDetails"> My phone number is 123 456 7890 </span>
 
 <br />
 

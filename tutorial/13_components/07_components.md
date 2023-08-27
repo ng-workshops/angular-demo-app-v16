@@ -1,6 +1,6 @@
 # 7 Component interaction - Message service
 
-> ng generate service home/message
+> npx ng generate service home/message
 
 ## src/app/home/message.service.ts
 
@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MessageService {
   // Observable string source
@@ -36,7 +36,7 @@ import {
   SimpleChange,
   Output,
   EventEmitter,
-  OnDestroy
+  OnDestroy,
 } from '@angular/core';
 import { MessageService } from '../message.service';
 import { Subscription } from 'rxjs';
@@ -44,14 +44,15 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'info-box',
   templateUrl: './info-box.component.html',
-  styleUrls: ['./info-box.component.scss']
+  styleUrls: ['./info-box.component.scss'],
 })
 export class InfoBoxComponent implements OnInit, OnChanges, OnDestroy {
-  private _name: string;
-  private subscription: Subscription;
+  private _name!: string;
+  private subscription!: Subscription;
+  private messageService = inject(MessageService);
 
   @Input()
-  message: string;
+  message: string | undefined;
 
   @Input()
   set name(value: string) {
@@ -65,24 +66,22 @@ export class InfoBoxComponent implements OnInit, OnChanges, OnDestroy {
   @Output()
   replyToParent = new EventEmitter<string>();
 
-  constructor(private messageService: MessageService) {}
-
   ngOnInit() {
     this.subscription = this.messageService.listener$.subscribe(
-      msg => (this.message = msg)
+      (msg) => (this.message = msg)
     );
   }
 
-  ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-    if (changes.message) {
-      console.log('changes.message', changes.message.currentValue);
+  ngOnChanges(changes: Record<string, SimpleChange>) {
+    if (changes['message']) {
+      console.log('changes.message', changes['message'].currentValue);
     }
 
-    if (changes.name) {
-      console.log('changes.name', changes.name.currentValue);
+    if (changes['name']) {
+      console.log('changes.name', changes['name'].currentValue);
     }
 
-    if (changes.message && changes.name) {
+    if (changes['message'] && changes['name']) {
       console.log('Message AND Name changed');
     }
   }
@@ -130,25 +129,28 @@ import { MessageService } from './message.service';
 
 @Component({
   selector: 'app-home',
+  standalone: true,
+  imports: [CommonModule, FormsModule, InfoBoxComponent],
+  templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  templateUrl: './home.component.html'
 })
 export class HomeComponent {
+  private modal = inject(ModalService);
+  private hostElement = inject(ViewContainerRef);
+
   message = 'INIT';
   name = 'START_';
   reply = '';
 
   @ViewChild('child')
-  private child: InfoBoxComponent;
-
-  constructor(private messageService: MessageService) {}
+  private child!: InfoBoxComponent;
 
   changeChild() {
     this.message = new Date().toISOString();
     this.name += 'X';
   }
 
-  processReply(event) {
+  processReply(event: string) {
     this.reply = event;
   }
 

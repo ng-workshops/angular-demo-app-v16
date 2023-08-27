@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewContainerRef } from '@angular/core';
+import { HostElementService } from './shared/modal/host/host-element.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'angular-demo-app';
+  constructor(
+    hostElementService: HostElementService,
+    hostElement: ViewContainerRef
+  ) {
+    hostElementService.setHost(hostElement);
+  }
 }

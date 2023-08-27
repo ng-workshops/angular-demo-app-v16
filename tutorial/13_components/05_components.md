@@ -6,7 +6,7 @@
 <p>
   <button (click)="changeChild()">Change Child data</button>
   <button (click)="child.name = 'Changed BY PARENT'">
-    Change Child via Template Var
+    Change Child via Template Variable
   </button>
 </p>
 

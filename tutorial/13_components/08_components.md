@@ -1,6 +1,6 @@
 # 8 Component - 2 way binding
 
-> ng generate component home/info-item
+> npx ng generate component home/info-item --standalone=true
 
 ## src/app/home/info-item/info-item.component.html
 
@@ -13,12 +13,16 @@
 ## src/app/home/info-item/info-item.component.ts
 
 ```ts
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-info-item',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './info-item.component.html',
-  styleUrls: ['./info-item.component.scss']
+  styleUrls: ['./info-item.component.scss'],
 })
 export class InfoItemComponent implements OnInit {
   private _messageValue: string;
@@ -48,4 +52,16 @@ export class InfoItemComponent implements OnInit {
 <p>
   <app-info-item [(message)]="name"></app-info-item>
 </p>
+```
+
+## src/app/home/home.component.ts
+
+```ts
+@Component({
+  selector: 'app-home',
+  standalone: true,
+  imports: [CommonModule, FormsModule, InfoBoxComponent, InfoItemComponent],
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
+})
 ```

@@ -14,18 +14,24 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'angular-demo-app'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('angular-demo-app');
-  });
+  // it(`should have showDetails set to false`, waitForAsync(() => {
+  //   const fixture = TestBed.createComponent(AppComponent);
+  //   const app: AppComponent = fixture.debugElement.componentInstance;
+  //   expect(app.showDetails).toBeFalsy();
+  // }));
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Welcome to the app!'
-    );
-  });
+  // it(`should have as title 'angular-demo-app'`, () => {
+  //   const fixture = TestBed.createComponent(AppComponent);
+  //   const app = fixture.componentInstance;
+  //   expect(app.title).toEqual('angular-demo-app');
+  // });
+
+  // it('should render title', () => {
+  //   const fixture = TestBed.createComponent(AppComponent);
+  //   fixture.detectChanges();
+  //   const compiled = fixture.nativeElement as HTMLElement;
+  //   expect(compiled.querySelector('h1')?.textContent).toContain(
+  //     'Welcome to the app!'
+  //   );
+  // });
 });

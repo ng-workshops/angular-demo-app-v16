@@ -6,7 +6,7 @@
 <p>
   <button (click)="changeChild()">Change Child data</button>
   <button (click)="child.name = 'Changed BY PARENT'">
-    Change Child via Template Var
+    Change Child via Template Variable
   </button>
   <button (click)="processReplyFromCode()">Change Child via ViewChild</button>
 </p>
@@ -30,15 +30,15 @@ import { InfoBoxComponent } from './info-box/info-box.component';
 @Component({
   selector: 'app-home',
   styleUrls: ['./home.component.scss'],
-  templateUrl: './home.component.html'
+  templateUrl: './home.component.html',
 })
 export class HomeComponent {
   message = 'INIT';
   name = 'START_';
   reply = '';
 
-  @ViewChild('child', { static: true })
-  private child: InfoBoxComponent;
+  @ViewChild('child')
+  private child!: InfoBoxComponent;
 
   changeChild() {
     this.message = new Date().toISOString();

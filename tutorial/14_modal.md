@@ -1,8 +1,8 @@
 # 14 Dynamic Modal
 
-> ng generate component shared/modal --module shared
+> npx ng generate component shared/modal --standalone=true
 
-> create src/app/shared/modal/modal.model.ts
+> create file src/app/shared/modal/modal.model.ts
 
 ## shared/modal/modal.model.ts
 
@@ -19,7 +19,7 @@ export interface ModalData {
 ## shared/modal/modal.component.html
 
 ```html
-<div class="closable backdrop" (click)="close.emit()"></div>
+<div class="closable backdrop" (click)="closeIt.emit()"></div>
 
 <div class="closable modal-dialog">
   <mat-card>
@@ -29,7 +29,7 @@ export interface ModalData {
       <button (click)="cancel.emit()" mat-raised-button color="basic">
         Ähm No
       </button>
-      <button (click)="close.emit()" mat-raised-button [color]="modal.type">
+      <button (click)="closeIt.emit()" mat-raised-button [color]="modal.type">
         Oki doki
       </button>
     </mat-card-content>
@@ -40,48 +40,42 @@ export interface ModalData {
 ## shared/modal/modal.component.ts
 
 ```ts
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { ModalData } from './modal.model';
 
 @Component({
-  selector: 'modal',
+  selector: 'app-modal',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss']
+  styleUrls: ['./modal.component.scss'],
 })
 export class ModalComponent implements OnInit {
-  @Input()
-  modal: ModalData;
+  @Input({ required: true })
+  modal!: ModalData;
 
   @Output()
-  close = new EventEmitter();
+  closeIt = new EventEmitter();
 
   @Output()
   cancel = new EventEmitter();
-
-  constructor() {}
-
-  ngOnInit() {}
 }
 ```
 
-> ng generate service shared/modal/modal
+> npx ng generate service shared/modal/modal
 
 ## shared/modal/modal.service.ts
 
 ```ts
-import {
-  ComponentFactoryResolver,
-  Injectable,
-  ViewContainerRef
-} from '@angular/core';
-
+import { Injectable, ViewContainerRef } from '@angular/core';
 import { ModalComponent } from './modal.component';
 import { ModalData } from './modal.model';
 
 @Injectable({ providedIn: 'root' })
 export class ModalService {
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
-
   open(data: ModalData, host: ViewContainerRef): ModalComponent {
     data.type = data.type || 'primary';
     return this.createModal(data, host);
@@ -90,24 +84,16 @@ export class ModalService {
   private createModal(data: ModalData, host: ViewContainerRef): ModalComponent {
     host.clear();
 
-    const modalFactory = this.componentFactoryResolver.resolveComponentFactory(
-      ModalComponent
-    );
-    const modal = host.createComponent(modalFactory);
+    const modal = host.createComponent(ModalComponent);
 
     modal.instance.modal = data;
-    modal.instance.close.subscribe(() => modal.destroy());
+    modal.instance.closeIt.subscribe(() => modal.destroy());
     modal.instance.cancel.subscribe(() => modal.destroy());
 
     return modal.instance;
   }
 }
 ```
-
-## shared/module.ts
-
-Add MatCardModule, MatButtonModule to imports
-Add ModalComponent in entry components
 
 ## home/home.component.html
 
@@ -118,58 +104,31 @@ Add ModalComponent in entry components
 ## home/home.component.ts
 
 ```ts
-import { Component, ViewChild, ViewContainerRef } from '@angular/core';
-import { InfoBoxComponent } from './info-box/info-box.component';
-import { MessageService } from './message.service';
+import { CommonModule } from '@angular/common';
+import { Component, ViewContainerRef, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ModalService } from '../shared/modal/modal.service';
 
 @Component({
   selector: 'app-home',
   styleUrls: ['./home.component.scss'],
-  templateUrl: './home.component.html'
+  templateUrl: './home.component.html',
 })
 export class HomeComponent {
-  message = 'INIT';
-  name = 'START_';
-  reply = '';
-
-  @ViewChild('child')
-  private child: InfoBoxComponent;
-
-  constructor(
-    private messageService: MessageService,
-    private hostElement: ViewContainerRef,
-    private modal: ModalService
-  ) {}
-
-  changeChild() {
-    this.message = new Date().toISOString();
-    this.name += 'X';
-  }
-
-  processReply(event) {
-    this.reply = event;
-  }
-
-  processReplyFromCode() {
-    this.child.reply('Send from parent via CODE');
-  }
-
-  sendMessage() {
-    this.messageService.sendMessage('Send from parent via service');
-  }
+  private modal = inject(ModalService);
+  private hostElement = inject(ViewContainerRef);
 
   openModal() {
     const modal = this.modal.open(
-      { message: this.name, title: 'My name is', type: 'primary' },
+      { message: this.customer.name, title: 'My name is', type: 'primary' },
       this.hostElement
     );
 
-    modal.close.subscribe(_ => {
+    modal.close.subscribe(() => {
       console.log('MODAL closed');
     });
 
-    modal.cancel.subscribe(_ => {
+    modal.cancel.subscribe(() => {
       console.log('MODAL cancelled');
     });
   }

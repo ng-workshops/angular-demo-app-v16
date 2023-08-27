@@ -1,14 +1,18 @@
 # Customer
 
+# Optionally install Angular CLI globally or use npx
+
 > npm install @angular/cli -g
 
-> ng generate module customers --module app
+> npx ng generate module customers --module app
 
-> ng generate component customers/customer
+> npx ng generate component customers/customer
 
-> ng generate component customers/customer-details
+> npx ng generate component customers/customer-details
 
 ## src/app/app.component.html
+
+Replace exsiting HTML code with the following:
 
 ```html
 <app-customer></app-customer>
@@ -20,7 +24,7 @@
 @NgModule({
   declarations: [CustomerDetailsComponent, CustomerComponent],
   exports: [CustomerComponent],
-  imports: [CommonModule]
+  imports: [CommonModule],
 })
 export class CustomersModule {}
 ```
@@ -33,16 +37,12 @@ import { Component, OnInit, Input, HostBinding } from '@angular/core';
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
-  styleUrls: ['./customer.component.scss']
+  styleUrls: ['./customer.component.scss'],
 })
 export class CustomerComponent {
-  @Input() customer;
+  @Input() customer: any;
 
   showDetails = false;
-
-  constructor() {}
-
-  ngOnInit() {}
 
   showMore() {
     this.showDetails = !this.showDetails;
@@ -62,9 +62,7 @@ export class CustomerComponent {
   </a>
 </div>
 <div class="content">
-  <span>
-    My hobbies: "{{ customer?.hobbies }}"
-  </span>
+  <span> My hobbies: "{{ customer?.hobbies }}" </span>
   <button mat-icon-button (click)="showMore()">
     <mat-icon>
       {{ showDetails ? 'keyboard_arrow_down' : 'keyboard_arrow_right' }}
@@ -79,26 +77,25 @@ export class CustomerComponent {
 ## src/app/customers/customers.module.ts
 
 ```ts
-import { MatButtonModule, MatIconModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   imports: [CommonModule, MatButtonModule, MatIconModule],
   declarations: [CustomerComponent, CustomerDetailsComponent],
-  exports: [CustomerComponent]
+  exports: [CustomerComponent],
 })
 export class CustomersModule {}
+```
+
+## src/app/customers/customer-details/customer-details.component.html
+
+```html
+<p>Some more information about the customer...</p>
 ```
 
 ## src/app/app.component.html
 
 ```html
 <app-customer [customer]="customer"></app-customer>
-```
-
-## src/app/customers/customer-details/customer-details.component.html
-
-```html
-<p>
-  Some more information about the customer...
-</p>
 ```

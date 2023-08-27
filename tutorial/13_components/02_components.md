@@ -19,15 +19,17 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'info-box',
+  selector: 'app-info-box',
+  standalone: true,
+  imports: [CommonModule, MatCardModule],
   templateUrl: './info-box.component.html',
-  styleUrls: ['./info-box.component.scss']
+  styleUrls: ['./info-box.component.scss'],
 })
 export class InfoBoxComponent implements OnInit {
-  private _name: string;
+  private _name!: string;
 
   @Input()
-  message: string;
+  message: string | undefined;
 
   @Input()
   set name(value: string) {
@@ -37,10 +39,6 @@ export class InfoBoxComponent implements OnInit {
   get name(): string {
     return this._name;
   }
-
-  constructor() {}
-
-  ngOnInit() {}
 }
 ```
 
@@ -61,8 +59,10 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-home',
+  standalone: true,
+  imports: [CommonModule, FormsModule, InfoBoxComponent],
+  templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  templateUrl: './home.component.html'
 })
 export class HomeComponent {
   message = 'INIT';

@@ -8,19 +8,21 @@ import {
   OnInit,
   Input,
   OnChanges,
-  SimpleChange
+  SimpleChange,
 } from '@angular/core';
 
 @Component({
-  selector: 'info-box',
+  selector: 'app-info-box',
+  standalone: true,
+  imports: [CommonModule, MatCardModule],
   templateUrl: './info-box.component.html',
-  styleUrls: ['./info-box.component.scss']
+  styleUrls: ['./info-box.component.scss'],
 })
-export class InfoBoxComponent implements OnInit, OnChanges {
-  private _name: string;
+export class InfoBoxComponent implements OnChanges {
+  private _name!: string;
 
   @Input()
-  message: string;
+  message: string | undefined;
 
   @Input()
   set name(value: string) {
@@ -31,20 +33,16 @@ export class InfoBoxComponent implements OnInit, OnChanges {
     return this._name;
   }
 
-  constructor() {}
-
-  ngOnInit() {}
-
   ngOnChanges(changes: Record<string, SimpleChange>) {
-    if (changes.message) {
-      console.log('changes.message', changes.message.currentValue);
+    if (changes['message']) {
+      console.log('changes.message', changes['message'].currentValue);
     }
 
-    if (changes.name) {
-      console.log('changes.name', changes.name.currentValue);
+    if (changes['name']) {
+      console.log('changes.name', changes['name'].currentValue);
     }
 
-    if (changes.message && changes.name) {
+    if (changes['message'] && changes['name']) {
       console.log('Message AND Name changed');
     }
   }

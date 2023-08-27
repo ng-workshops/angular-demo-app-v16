@@ -160,6 +160,8 @@ app-customer {
   }
 
   .content {
+    display: flex;
+    align-items: center;
     background-color: #fafafa;
     padding: 10px;
     flex-grow: 1;
@@ -186,6 +188,11 @@ app-customer {
 
 .customers-search {
   margin-left: 40px;
+  display: flex;
+
+  mat-form-field {
+    margin-right: 20px;
+  }
 }
 
 .customer {

@@ -5,8 +5,6 @@
 ## src/app/customers/customer/customer.component.html
 
 ```html
-...
-
 <div class="footer">
   <button mat-icon-button (click)="edit()">
     <mat-icon>edit</mat-icon>
@@ -19,7 +17,7 @@
 ## src/app/customers/customer/customer.component.ts
 
 ```ts
-...
+import { Router } from '@angular/router';
 
 constructor(private router: Router) { }
 
@@ -35,19 +33,19 @@ edit() {
 ```ts
 import { of, Observable } from 'rxjs';
 
-...
-
-getById(id: string): Observable<Customer> {
+getById(id: string | null): Observable<Customer | undefined> {
   return of(this.getAll().find(c => c.id.toString() === id));
 }
 ```
 
-## Extend ngOnInit()
+## Add ngOnInit()
 
 ## src/app/customers/customer-form/customer-form.component.ts
 
 ```ts
-...
+import { ActivatedRoute, Router } from '@angular/router';
+import { filter, switchMap } from 'rxjs/operators';
+import { CustomerService } from '../customer.service';
 
 constructor(
     private snackBar: MatSnackBar,
@@ -65,7 +63,7 @@ constructor(
         switchMap(params => this.customerService.getById(params.get('id')))
       )
       .subscribe(customer => {
-        this.form.patchValue(customer);
+        this.form.patchValue(customer || {});
       });
   }
 

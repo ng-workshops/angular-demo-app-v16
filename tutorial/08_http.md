@@ -5,22 +5,19 @@
 ## src/app/customers/customer.module.ts
 
 ```ts
-...
+import { HttpClientModule } from '@angular/common/http';
 
 imports: [
-    CommonModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    CustomersRoutingModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSnackBarModule,
-    MatInputModule,
-    MatFormFieldModule
-  ]
-
-  ...
+  CommonModule,
+  MatButtonModule,
+  MatIconModule,
+  ReactiveFormsModule,
+  MatSnackBarModule,
+  MatInputModule,
+  MatFormFieldModule,
+  CustomersRoutingModule,
+  HttpClientModule,
+];
 ```
 
 ## Add HttpClient
@@ -34,7 +31,7 @@ import { environment } from '../../environments/environment';
 import { Customer } from './customer';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CustomerService {
   private readonly endpoint = environment.endpoints.customers;
@@ -73,8 +70,6 @@ export class CustomerService {
 ## src/app/customers/cutomer-form/customer-form.component.ts
 
 ```ts
-...
-
 submit() {
     const data = this.form.getRawValue();
     const save$ = data.id
@@ -133,8 +128,6 @@ import {
   distinctUntilChanged,
   switchMap,
   startWith,
-  withLatestFrom,
-  map
 } from 'rxjs/operators';
 import { Customer } from '../customer';
 import { CustomerService } from '../customer.service';
@@ -142,35 +135,28 @@ import { CustomerService } from '../customer.service';
 @Component({
   selector: 'app-customer-list',
   templateUrl: './customer-list.component.html',
-  styleUrls: ['./customer-list.component.scss']
+  styleUrls: ['./customer-list.component.scss'],
 })
-export class CustomerListComponent implements OnInit {
-  customers$: Observable<Customer[]>;
-  searchTerm = new FormControl();
+export class CustomerListComponent {
+  searchTerm = new FormControl<string>('', { nonNullable: true });
 
-  private search$: Observable<string>;
-  private reload$ = new Subject();
+  private search$: Observable<string> = this.searchTerm.valueChanges.pipe(
+    debounceTime(400),
+    distinctUntilChanged(),
+    startWith('')
+  );
+  private reload$ = new Subject<void>();
+
+  customers$: Observable<Customer[]> = merge(this.search$, this.reload$).pipe(
+    switchMap(() => {
+      return this.customerService.getAll(this.searchTerm.value);
+    })
+  );
 
   constructor(
-    private router: Router,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private router: Router
   ) {}
-
-  ngOnInit() {
-    this.search$ = this.searchTerm.valueChanges.pipe(
-      debounceTime(400),
-      distinctUntilChanged(),
-      startWith('')
-    );
-
-    this.customers$ = merge(this.search$, this.reload$).pipe(
-      withLatestFrom(this.search$),
-      map(value => value[1]),
-      switchMap(value => {
-        return this.customerService.getAll(value);
-      })
-    );
-  }
 
   addNewCustomer() {
     this.router.navigateByUrl('/customers/new');
@@ -187,8 +173,6 @@ export class CustomerListComponent implements OnInit {
 ## src/app/customers/customer/customer.component.ts
 
 ```ts
-...
-
 @Output() deleteCustomer = new EventEmitter<number>();
 
 delete(id: number) {
@@ -201,8 +185,6 @@ delete(id: number) {
 ## src/app/customers/customer/customer.component.html
 
 ```html
-...
-
 <!-- footer -->
 
 <button mat-icon-button (click)="delete(customer?.id)">

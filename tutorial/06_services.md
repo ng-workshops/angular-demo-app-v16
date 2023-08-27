@@ -1,6 +1,6 @@
 # Services
 
-> ng generate service customers/customer
+> npx ng generate service customers/customer
 
 ## src/app/customers/customer.service.ts
 
@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 import { Customer } from './customer';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CustomerService {
   constructor() {}
@@ -20,14 +20,14 @@ export class CustomerService {
         id: 1,
         name: 'Simpson',
         firstname: 'Homer',
-        hobbies: ['eat', 'sleep', 'beer']
-      }
+        hobbies: ['eat', 'sleep', 'beer'],
+      },
     ];
   }
 }
 ```
 
-> ng generate component customers/customer-list
+> npx ng generate component customers/customer-list
 
 ## src/app/customers/customer-list/customer-list.component.ts
 
@@ -39,10 +39,10 @@ import { CustomerService } from '../customer.service';
 @Component({
   selector: 'app-customer-list',
   templateUrl: './customer-list.component.html',
-  styleUrls: ['./customer-list.component.scss']
+  styleUrls: ['./customer-list.component.scss'],
 })
 export class CustomerListComponent implements OnInit {
-  customers: Customer[];
+  customers: Customer[] = [];
 
   constructor(private customerService: CustomerService) {}
 
@@ -64,14 +64,11 @@ export class CustomerListComponent implements OnInit {
 ## src/app/customers/customers-routing.module.ts
 
 ```ts
-...
 import { CustomerListComponent } from './customer-list/customer-list.component';
 
 const routes: Routes = [
   { path: 'customers', component: CustomerListComponent },
   { path: 'customers/:id', component: CustomerFormComponent },
-  { path: 'customers/new', component: CustomerFormComponent }
+  { path: 'customers/new', component: CustomerFormComponent },
 ];
-
-...
 ```

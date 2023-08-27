@@ -33,27 +33,28 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 Dokumentation of the all the Angular CLI commands and addional information of common use cases, like using some 3rd party lib within the app or use a proxy during the development to access a backend server.
 
 - [Docs](https://angular.io/cli)
-- [Stories](https://github.com/angular/angular-cli/wiki/stories)
+- [Stories](https://angular.io/guide/deployment)
 
 ### Angular styleguide
 
 Offical code styleguide from the Angular team.
 
 - https://angular.io/guide/styleguide
-- https://angular-checklist.io/projects
+- https://itnext.io/clean-code-checklist-in-angular-%EF%B8%8F-10d4db877f74 (Oldie but goldie)
 - [Angular Update Guide](https://update.angular.io)
 
 ### Create you own Angular lib
 
 Since v6 of the Angular cli you can have multiple apps within a project. This can also be used for your own libs.
 
-https://github.com/angular/angular-cli/wiki/stories-create-library
+https://angular.io/guide/creating-libraries
 
 ### RxJS
 
 - https://www.learnrxjs.io
 - [When to unsubscribe in Angular](https://netbasal.com/when-to-unsubscribe-in-angular-d61c6b21bad3)
-- [Rxjs marbles](https://rxmarbles.com/) Marble diagrams for rxjs operators
+- [RxJS marbles](https://rxmarbles.com/) Marble diagrams for RxJS operators
+- [RxJS Fruits](https://www.rxjs-fruits.com/subscribe) Learn RxJS with a small browser game in german
 
 ### Vs Code
 
@@ -84,7 +85,7 @@ Blog article how you can use the [Jest](https://facebook.github.io/jest/) testin
 
 A toolkit based on the Angular cli to support the writing of large scale enterprise applications. One key feature is the automated detection of dependent application/libs within a project.
 
-https://nrwl.io/nx
+https://nx.dev
 
 ### Internationalization
 
@@ -98,7 +99,7 @@ https://nrwl.io/nx
 
 - [Augury](https://augury.angular.io) Chrome Extension for debugging and profiling Angular apps
 - [ngrev](https://github.com/mgechev/ngrev) Tool will generate a graphical representation of the component structure of your Angular app
-- [Angular Console](https://angularconsole.com) The UI for the angular-cli
+- [Nx Console](https://angularconsole.com) The UI for the angular-cli as VsCode Plugin
 
 ### Styling
 
@@ -128,16 +129,14 @@ https://nrwl.io/nx
 ### Recommended high quality blogs
 
 - https://angular.de
-- https://angular.de/slack (Deutscher Angular Slack channel)
+- https://discord.com/invite/pgYUTJVaAk (Deutscher Angular Discord channel)
 - https://egghead.io/
 - https://blog.angular.io
 - https://blog.thoughtram.io
-- https://blog.angularindepth.com
+- https://indepth.dev/angular
 - https://blog.nrwl.io
-- https://alligator.io/angular/
 - https://netbasal.com
-- http://www.softwarearchitekt.at/default.aspx
-- https://juristr.com/blog/
+- https://www.angulararchitects.io/blog/
 - https://www.bennadel.com/index.cfm
 
 ### Youtube Channels of Angular conferences

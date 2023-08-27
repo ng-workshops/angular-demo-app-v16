@@ -19,7 +19,8 @@
     "tdd": "jest --bail --expand --verbose",
     "tdd:cover": "jest --coverage --no-cache",
     "lint": "ng lint",
-    "check": "ncu"
+    "check": "ncu",
+    "ci": "npm run lint && npm run jest && npm run build"
   },
   "private": true,
   "dependencies": {

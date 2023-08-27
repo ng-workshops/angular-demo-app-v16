@@ -1,8 +1,8 @@
 # Directives
 
-> ng generate module shared --module app
+> npx ng generate module shared --module app
 
-> ng generate directive shared/directives/can-click --export
+> npx ng generate directive shared/directives/can-click --export
 
 ## src/app/shared/directives/can-click.directive.ts
 
@@ -13,18 +13,29 @@ import {
   EventEmitter,
   HostBinding,
   HostListener,
-  OnInit,
+  Input,
   Output,
-  Renderer2
+  Renderer2,
 } from '@angular/core';
 
 @Directive({
-  selector: '[appCanClick]'
+  selector: '[appCanClick]',
 })
-export class CanClickDirective implements OnInit {
+export class CanClickDirective {
   @HostBinding('class.app-disabled') isDisabled = true;
 
-  @Output() canClick = new EventEmitter();
+  @Input()
+  set appCanClick(value: boolean) {
+    this.isDisabled = !value;
+    this.renderer.setProperty(
+      this.element.nativeElement,
+      'title',
+      value ? '' : 'Is disabled!'
+    );
+  }
+
+  @Output()
+  action = new EventEmitter();
 
   constructor(private element: ElementRef, private renderer: Renderer2) {}
 
@@ -35,16 +46,7 @@ export class CanClickDirective implements OnInit {
       return;
     }
 
-    this.canClick.emit(e);
-  }
-
-  ngOnInit() {
-    this.isDisabled = true;
-    this.renderer.setProperty(
-      this.element.nativeElement,
-      'title',
-      'Im Demo-Modus nicht verfügbar'
-    );
+    this.action.emit(e);
   }
 }
 ```
@@ -52,6 +54,8 @@ export class CanClickDirective implements OnInit {
 ## src/app/customers/customers.module.ts
 
 ```ts
+import { SharedModule } from '../shared/shared.module';
+
 @NgModule({
   imports: [
     ...
@@ -69,7 +73,11 @@ export class CustomersModule {}
 
 <div class="footer">
   ...
-  <button appCanClick mat-icon-button (canClick)="delete(customer?.id)">
+  <button
+    mat-icon-button
+    [appCanClick]="customer?.numberOfOrders < 10"
+    (action)="delete(customer?.id)"
+  >
     <mat-icon>delete</mat-icon>
   </button>
 </div>

@@ -1,6 +1,6 @@
 # 15 Dynamic Global Modal
 
-> ng generate service shared/modal/host/host-element
+> npx ng generate service shared/modal/host/host-element
 
 ## shared/modal/host/host-element.service.ts
 
@@ -9,7 +9,7 @@ import { Injectable, ViewContainerRef } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 
 Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 });
 export class HostElementService {
   private _hostElement = new ReplaySubject<ViewContainerRef>(1);
@@ -28,7 +28,7 @@ import {
   Component,
   HostBinding,
   OnInit,
-  ViewContainerRef
+  ViewContainerRef,
 } from '@angular/core';
 import { HostElementService } from './shared/modal/host/host-element.service';
 
@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
 import {
   ComponentFactoryResolver,
   Injectable,
-  ViewContainerRef
+  ViewContainerRef,
 } from '@angular/core';
 
 import { ModalComponent } from './modal.component';
@@ -71,17 +71,14 @@ export class ModalService {
 
   openGlobal(data: ModalData): Observable<ModalComponent> {
     return this.hostElementService.hostElement$.pipe(
-      map(host => this.createModal(data, host))
+      map((host) => this.createModal(data, host))
     );
   }
 
   private createModal(data: ModalData, host: ViewContainerRef): ModalComponent {
     host.clear();
 
-    const modalFactory = this.componentFactoryResolver.resolveComponentFactory(
-      ModalComponent
-    );
-    const modal = host.createComponent(modalFactory);
+    const modal = host.createComponent(ModalComponent);
 
     modal.instance.modal = data;
     modal.instance.close.subscribe(() => modal.destroy());
@@ -91,11 +88,6 @@ export class ModalService {
   }
 }
 ```
-
-## shared/module.ts
-
-Add HostElementService to providers
-providers: [HostElementService],
 
 ## home/home.component.html
 

@@ -1,6 +1,6 @@
 # 1 Component interaction - Parent to Child
 
-> ng generate component home/info-box
+> npx ng generate component home/info-box --standalone=true
 
 ## src/app/home/info-box/info-box.component.html
 
@@ -17,20 +17,20 @@
 ## src/app/home/info-box/info-box.component.ts
 
 ```ts
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-info-box',
+  standalone: true,
+  imports: [CommonModule, MatCardModule],
   templateUrl: './info-box.component.html',
-  styleUrls: ['./info-box.component.scss']
+  styleUrls: ['./info-box.component.scss'],
 })
 export class InfoBoxComponent implements OnInit {
   @Input()
-  message: string;
-
-  constructor() {}
-
-  ngOnInit() {}
+  message: string | undefined;
 }
 ```
 
@@ -47,6 +47,15 @@ export class InfoBoxComponent implements OnInit {
 ## src/app/home/home.component.ts
 
 ```ts
+import { InfoBoxComponent } from './info-box/info-box.component';
+
+@Component({
+  selector: 'app-home',
+  standalone: true,
+  imports: [CommonModule, FormsModule, InfoBoxComponent],
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
+})
 export class HomeComponent {
   message = 'INIT';
 
@@ -54,10 +63,4 @@ export class HomeComponent {
     this.message = new Date().toISOString();
   }
 }
-```
-
-## src/app/home/home.module.ts
-
-```ts
-imports: [CommonModule, FormsModule, MatCardModule];
 ```

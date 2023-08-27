@@ -13,7 +13,7 @@
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  imports: [BrowserModule, FormsModule],
+  imports: [BrowserModule, BrowserAnimationsModule, FormsModule],
   declarations: [AppComponent],
   bootstrap: [AppComponent]
 })

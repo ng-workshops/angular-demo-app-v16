@@ -1,5 +1,13 @@
 # Testing - components
 
+## Add jest to tsconfig so that the types are found
+
+## tsconfig.spec.json
+
+```json
+ "types": ["jasmine", "jest"],
+```
+
 ## src/app/customers/customer-list/customer-list.component.spec.ts
 
 ```ts
@@ -18,22 +26,22 @@ describe('CustomerListComponent', () => {
 
   beforeEach(async(() => {
     routerMock = {
-      navigateByUrl: jest.fn()
+      navigateByUrl: jest.fn(),
     };
 
     customerServiceMock = {
       getAll: jest.fn().mockReturnValue(of([])),
-      delete: jest.fn().mockReturnValue(of({}))
+      delete: jest.fn().mockReturnValue(of({})),
     };
 
     TestBed.configureTestingModule({
       declarations: [CustomerListComponent],
       providers: [
         { provide: Router, useValue: routerMock },
-        { provide: CustomerService, useValue: customerServiceMock }
+        { provide: CustomerService, useValue: customerServiceMock },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    });
   }));
 
   beforeEach(() => {
@@ -67,15 +75,15 @@ describe('CustomerListComponent without TestBed', () => {
 
   beforeEach(() => {
     routerMock = {
-      navigateByUrl: jest.fn()
+      navigateByUrl: jest.fn(),
     };
 
     customerServiceMock = {
       getAll: jest.fn().mockReturnValue(of([])),
-      delete: jest.fn().mockReturnValue(of({}))
+      delete: jest.fn().mockReturnValue(of({})),
     };
 
-    component = new CustomerListComponent(routerMock, customerServiceMock);
+    component = new CustomerListComponent(customerServiceMock, routerMock);
   });
 
   it('should create', () => {

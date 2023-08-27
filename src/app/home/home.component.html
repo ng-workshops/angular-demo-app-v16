@@ -1,0 +1,27 @@
+<p>
+  <button (click)="changeChild()">Change Child data</button>
+  <button (click)="child.name = 'Changed BY PARENT'">
+    Change Child via Template Variable
+  </button>
+  <button (click)="processReplyFromCode()">Change Child via ViewChild</button>
+  <button (click)="sendMessage()">Send message via service</button>
+</p>
+
+<app-info-box
+  #child
+  [message]="message"
+  [name]="name"
+  (replyToParent)="processReply($event)"
+>
+  <footer>I am the footer</footer>
+  <div header>I am the header</div>
+</app-info-box>
+
+<p>
+  <app-info-item [(message)]="name"></app-info-item>
+</p>
+
+<pre>Message from Child = {{ reply | json }}</pre>
+
+<button (click)="openModal()">Open modal</button>
+<button (click)="openModalGlobal()">Open modal globally</button>

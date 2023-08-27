@@ -1,10 +1,11 @@
 # Routing
 
-> ng generate module home --module app
+> npx ng generate component home --standalone=true
 
-> ng generate component home
+<!-- Restart ng serve because otherwise in some cases the standalone component is not found by the compiler -->
+<!-- Create file in IDE or in command line -->
 
-> create file src/app/app-routing.module.ts
+> src/app/app-routing.module.ts
 
 ## src/app/app-routing.module.ts
 
@@ -16,12 +17,12 @@ import { HomeComponent } from './home/home.component';
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: '**', component: HomeComponent }
+  { path: '**', component: HomeComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}
 ```
@@ -29,21 +30,25 @@ export class AppRoutingModule {}
 ## src/app/app.module.ts
 
 ```ts
+import { AppRoutingModule } from './app-routing.module';
+
 @NgModule({
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     CustomersModule,
-    HomeModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   declarations: [AppComponent],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
 ```
 
-> create file src/app/customers/customers-routing.module.ts
+<!-- Create file in IDE or cin command line -->
+
+> src/app/customers/customers-routing.module.ts
 
 ## src/app/customers/customers-routing.module.ts
 
@@ -56,12 +61,12 @@ import { CustomerComponent } from './customer/customer.component';
 const routes: Routes = [
   { path: 'customers', component: CustomerComponent },
   { path: 'customers/:id', component: CustomerFormComponent },
-  { path: 'customers/new', component: CustomerFormComponent }
+  { path: 'customers/new', component: CustomerFormComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class CustomersRoutingModule {}
 ```
@@ -73,25 +78,27 @@ export class CustomersRoutingModule {}
   declarations: [
     CustomerDetailsComponent,
     CustomerComponent,
-    CustomerFormComponent
+    CustomerFormComponent,
   ],
   exports: [CustomerComponent, CustomerFormComponent],
   imports: [
     CommonModule,
     BrowserAnimationsModule,
-    CustomersRoutingModule,
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
     MatSnackBarModule,
     MatInputModule,
-    MatFormFieldModule
-  ]
+    MatFormFieldModule,
+    CustomersRoutingModule,
+  ],
 })
 export class CustomersModule {}
 ```
 
 ## src/app/app.component.html
+
+<!-- Replace content of existing file -->
 
 ```html
 <nav>
@@ -118,9 +125,7 @@ export class CustomersModule {}
 <button (click)="showDetails = !showDetails">
   {{ showDetails ? 'Hide' : 'Show' }} the secret message
 </button>
-<span [hidden]="!showDetails">
-  My phone number is 123 456 7890
-</span>
+<span [hidden]="!showDetails"> My phone number is 123 456 7890 </span>
 
 <br />
 
@@ -143,6 +148,17 @@ export class CustomersModule {}
 ## src/app/home/home.component.ts
 
 ```ts
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-home',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
+})
 export class HomeComponent {
   showDetails = false;
 
@@ -150,21 +166,11 @@ export class HomeComponent {
     id: 1,
     name: 'Simpson',
     firstname: 'Homer',
-    hobbies: ['eat', 'sleep', 'beer']
+    hobbies: ['eat', 'sleep', 'beer'],
   };
 
-  callMe(phone) {
+  callMe(phone: string) {
     alert(`Please call this number: ${phone}`);
   }
 }
-```
-
-## src/app/home/home.module.ts
-
-```ts
-@NgModule({
-  declarations: [HomeComponent],
-  imports: [CommonModule, FormsModule]
-})
-export class HomeModule {}
 ```

@@ -1,6 +1,6 @@
 # Customer form
 
-> ng generate class customers/customer
+> npx ng generate class customers/customer
 
 ## src/app/customers/customer.ts
 
@@ -8,8 +8,8 @@
 import { FormBuilder, Validators } from '@angular/forms';
 
 export class Customer {
-  id: number;
-  name: string;
+  id!: number;
+  name: string | undefined;
 
   firstname?: string;
   hobbies?: string[];
@@ -25,13 +25,13 @@ export class Customer {
       numberOfOrders: formBuilder.control(
         customer.numberOfOrders || 0,
         Validators.min(0)
-      )
+      ),
     });
   }
 }
 ```
 
-> ng generate component customers/customer-form
+> npx ng generate component customers/customer-form
 
 ## src/app/app.component.html
 
@@ -56,24 +56,20 @@ export class Customer {
 ## src/app/customers/customer-form/customer-form.component.ts
 
 ```ts
-import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Customer } from '../customer';
 
 @Component({
   selector: 'app-customer-form',
   templateUrl: './customer-form.component.html',
-  styleUrls: ['./customer-form.component.scss']
+  styleUrls: ['./customer-form.component.scss'],
 })
-export class CustomerFormComponent implements OnInit {
-  form: FormGroup;
+export class CustomerFormComponent {
+  form: FormGroup = Customer.toFormGroup();
 
   constructor(private snackBar: MatSnackBar) {}
-
-  ngOnInit() {
-    this.form = Customer.toFormGroup();
-  }
 
   submit() {
     const data = this.form.getRawValue();
@@ -81,7 +77,7 @@ export class CustomerFormComponent implements OnInit {
     console.table(data);
 
     this.snackBar.open(`Customer ${data.name} saved successfully.`, '', {
-      duration: 2000
+      duration: 2000,
     });
   }
 
@@ -92,13 +88,13 @@ export class CustomerFormComponent implements OnInit {
 ## src/app/customers/customer-form/customer-form.component.html
 
 ```html
-<h1>{{ form.get('id').value ? 'Edit' : 'Add' }} customer</h1>
+<h1>{{ form.get('id')?.value ? 'Edit' : 'Add' }} customer</h1>
 
 <form novalidate [formGroup]="form" (ngSubmit)="submit()">
   <div class="form-row">
     <mat-form-field>
       <input type="text" matInput placeholder="Name" formControlName="name" />
-      <mat-error *ngIf="form.get('name').hasError('required')">
+      <mat-error *ngIf="form.get('name')?.hasError('required')">
         REQUIRED
       </mat-error>
     </mat-form-field>
@@ -145,23 +141,28 @@ export class CustomerFormComponent implements OnInit {
 ## src/app/customers/customers.module.ts
 
 ```ts
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
 @NgModule({
   declarations: [
     CustomerDetailsComponent,
     CustomerComponent,
-    CustomerFormComponent
+    CustomerFormComponent,
   ],
   exports: [CustomerComponent, CustomerFormComponent],
   imports: [
     CommonModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
+    ReactiveFormsModule,
     MatSnackBarModule,
     MatInputModule,
-    MatFormFieldModule
-  ]
+    MatFormFieldModule,
+  ],
 })
 export class CustomersModule {}
 ```

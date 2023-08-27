@@ -28,15 +28,17 @@ import {
   OnChanges,
   SimpleChange,
   Output,
-  EventEmitter
+  EventEmitter,
 } from '@angular/core';
 
 @Component({
-  selector: 'info-box',
+  selector: 'app-info-box',
+  standalone: true,
+  imports: [CommonModule, MatCardModule],
   templateUrl: './info-box.component.html',
-  styleUrls: ['./info-box.component.scss']
+  styleUrls: ['./info-box.component.scss'],
 })
-export class InfoBoxComponent implements OnInit, OnChanges {
+export class InfoBoxComponent implements OnChanges {
   private _name: string;
 
   @Input()
@@ -54,20 +56,16 @@ export class InfoBoxComponent implements OnInit, OnChanges {
   @Output()
   replyToParent = new EventEmitter<string>();
 
-  constructor() {}
-
-  ngOnInit() {}
-
-  ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-    if (changes.message) {
-      console.log('changes.message', changes.message.currentValue);
+  ngOnChanges(changes: Record<string, SimpleChange>) {
+    if (changes['message']) {
+      console.log('changes.message', changes['message'].currentValue);
     }
 
-    if (changes.name) {
-      console.log('changes.name', changes.name.currentValue);
+    if (changes['name']) {
+      console.log('changes.name', changes['name'].currentValue);
     }
 
-    if (changes.message && changes.name) {
+    if (changes['message'] && changes['name']) {
       console.log('Message AND Name changed');
     }
   }
@@ -101,8 +99,10 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-home',
+  standalone: true,
+  imports: [CommonModule, FormsModule, InfoBoxComponent],
+  templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  templateUrl: './home.component.html'
 })
 export class HomeComponent {
   message = 'INIT';
@@ -114,7 +114,7 @@ export class HomeComponent {
     this.name += 'X';
   }
 
-  processReply(event) {
+  processReply(event: string) {
     this.reply = event;
   }
 }
