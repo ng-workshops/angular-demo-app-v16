@@ -17,6 +17,10 @@ describe('CustomerComponent', () => {
     });
     fixture = TestBed.createComponent(CustomerComponent);
     component = fixture.componentInstance;
+    component.customer = {
+      id: 1,
+      name: 'test',
+    };
     fixture.detectChanges();
   });
 

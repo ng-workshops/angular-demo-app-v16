@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'customerStatus',
 })
 export class CustomerStatusPipe implements PipeTransform {
-  transform(value: number): string {
+  transform(value?: number): string {
     if (!value) {
       return 'thumb_down';
     }

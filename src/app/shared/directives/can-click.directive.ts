@@ -16,7 +16,7 @@ export class CanClickDirective {
   @HostBinding('class.app-disabled') isDisabled = true;
 
   @Input()
-  set appCanClick(value: boolean) {
+  set appCanClick(value: boolean | undefined) {
     this.isDisabled = !value;
     this.renderer.setProperty(
       this.element.nativeElement,

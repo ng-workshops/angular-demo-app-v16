@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CanClickDirective } from './can-click.directive';
 
 describe('CanClickDirective', () => {

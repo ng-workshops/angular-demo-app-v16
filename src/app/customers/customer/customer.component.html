@@ -1,16 +1,16 @@
 <div class="header">
   <a>
     <h4>
-      {{ customer?.name
-      }}{{ customer?.firstname ? ', ' + customer?.firstname : '' }}
+      {{ customer.name
+      }}{{ customer.firstname ? ', ' + customer.firstname : '' }}
     </h4>
   </a>
   <span
-    ><mat-icon>{{ customer?.numberOfOrders | customerStatus }}</mat-icon></span
+    ><mat-icon>{{ customer.numberOfOrders | customerStatus }}</mat-icon></span
   >
 </div>
 <div class="content">
-  <span> My hobbies: "{{ customer?.hobbies }}" </span>
+  <span> My hobbies: "{{ customer.hobbies }}" </span>
   <button mat-icon-button (click)="showMore()">
     <mat-icon>
       {{ showDetails ? 'keyboard_arrow_down' : 'keyboard_arrow_right' }}
@@ -27,9 +27,9 @@
   </button>
 
   <button
-    [appCanClick]="customer?.numberOfOrders < 10"
+    [appCanClick]="(customer.numberOfOrders || 0) < 10"
     mat-icon-button
-    (action)="delete(customer?.id)"
+    (action)="delete(customer.id)"
   >
     <mat-icon>delete</mat-icon>
   </button>

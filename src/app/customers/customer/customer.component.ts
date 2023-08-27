@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { Customer } from '../customer';
 
 @Component({
   selector: 'app-customer',
@@ -7,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./customer.component.scss'],
 })
 export class CustomerComponent {
-  @Input() customer: any;
+  @Input({ required: true }) customer!: Customer;
 
   @Output() deleteCustomer = new EventEmitter<number>();
 
@@ -20,7 +21,7 @@ export class CustomerComponent {
   }
 
   edit() {
-    this.router.navigate(['customers', this.customer.id]);
+    this.router.navigate(['customers', this.customer?.id]);
   }
 
   delete(id: number) {
