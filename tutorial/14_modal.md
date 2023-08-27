@@ -19,7 +19,12 @@ export interface ModalData {
 ## shared/modal/modal.component.html
 
 ```html
-<div class="closable backdrop" (click)="closeIt.emit()"></div>
+<div
+  class="closable backdrop"
+  (click)="closeIt.emit()"
+  (keyup.esc)="closeIt.emit()"
+  role="none"
+></div>
 
 <div class="closable modal-dialog">
   <mat-card>
