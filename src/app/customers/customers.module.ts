@@ -13,26 +13,24 @@ import { CustomersRoutingModule } from './customers-routing.module';
 import { CustomerListComponent } from './customer-list/customer-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CustomerStatusPipe } from './customer-status.pipe';
-import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-    exports: [CustomerComponent, CustomerFormComponent],
-    imports: [
-        CommonModule,
-        MatButtonModule,
-        MatIconModule,
-        ReactiveFormsModule,
-        MatSnackBarModule,
-        MatInputModule,
-        MatFormFieldModule,
-        CustomersRoutingModule,
-        HttpClientModule,
-        SharedModule,
-        CustomerComponent,
-        CustomerDetailsComponent,
-        CustomerFormComponent,
-        CustomerListComponent,
-        CustomerStatusPipe,
-    ],
+  exports: [CustomerComponent, CustomerFormComponent],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    MatSnackBarModule,
+    MatInputModule,
+    MatFormFieldModule,
+    CustomersRoutingModule,
+    HttpClientModule,
+    CustomerComponent,
+    CustomerDetailsComponent,
+    CustomerFormComponent,
+    CustomerListComponent,
+    CustomerStatusPipe,
+  ],
 })
 export class CustomersModule {}
