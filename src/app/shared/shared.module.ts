@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CanClickDirective } from './directives/can-click.directive';
 
 @NgModule({
-  declarations: [CanClickDirective],
-  imports: [CommonModule],
-  exports: [CanClickDirective],
+    imports: [CommonModule, CanClickDirective],
+    exports: [CanClickDirective],
 })
 export class SharedModule {}

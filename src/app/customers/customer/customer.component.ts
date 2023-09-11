@@ -1,11 +1,24 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Customer } from '../customer';
+import { CustomerStatusPipe } from '../customer-status.pipe';
+import { CanClickDirective } from '../../shared/directives/can-click.directive';
+import { NgIf } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-customer',
-  templateUrl: './customer.component.html',
-  styleUrls: ['./customer.component.scss'],
+    selector: 'app-customer',
+    templateUrl: './customer.component.html',
+    styleUrls: ['./customer.component.scss'],
+    standalone: true,
+    imports: [
+        MatIconModule,
+        MatButtonModule,
+        NgIf,
+        CanClickDirective,
+        CustomerStatusPipe,
+    ],
 })
 export class CustomerComponent {
   @Input({ required: true }) customer!: Customer;

@@ -8,13 +8,32 @@ import {
   switchMap,
   startWith,
 } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CustomerDetailsComponent } from '../customer-details/customer-details.component';
+import { CustomerComponent } from '../customer/customer.component';
+import { NgFor, AsyncPipe } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
-  selector: 'app-customer-list',
-  templateUrl: './customer-list.component.html',
-  styleUrls: ['./customer-list.component.scss'],
+    selector: 'app-customer-list',
+    templateUrl: './customer-list.component.html',
+    styleUrls: ['./customer-list.component.scss'],
+    standalone: true,
+    imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatIconModule,
+        NgFor,
+        CustomerComponent,
+        CustomerDetailsComponent,
+        AsyncPipe,
+    ],
 })
 export class CustomerListComponent {
   searchTerm = new FormControl<string>('', { nonNullable: true });

@@ -10,7 +10,8 @@ import {
 } from '@angular/core';
 
 @Directive({
-  selector: '[appCanClick]',
+    selector: '[appCanClick]',
+    standalone: true,
 })
 export class CanClickDirective {
   @HostBinding('class.app-disabled') isDisabled = true;

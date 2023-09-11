@@ -1,15 +1,28 @@
 import { Component } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Customer } from '../customer';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, switchMap } from 'rxjs/operators';
 import { CustomerService } from '../customer.service';
+import { MatButtonModule } from '@angular/material/button';
+import { NgIf, JsonPipe } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
-  selector: 'app-customer-form',
-  templateUrl: './customer-form.component.html',
-  styleUrls: ['./customer-form.component.scss'],
+    selector: 'app-customer-form',
+    templateUrl: './customer-form.component.html',
+    styleUrls: ['./customer-form.component.scss'],
+    standalone: true,
+    imports: [
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        NgIf,
+        MatButtonModule,
+        JsonPipe,
+    ],
 })
 export class CustomerFormComponent {
   form: FormGroup = Customer.toFormGroup();
