@@ -94,9 +94,9 @@ export class CustomerFormComponent {
   <div class="form-row">
     <mat-form-field>
       <input type="text" matInput placeholder="Name" formControlName="name" />
-      <mat-error *ngIf="form.get('name')?.hasError('required')">
-        REQUIRED
-      </mat-error>
+      @if (form.get('name')?.hasError('required')) {
+      <mat-error> REQUIRED </mat-error>
+      }
     </mat-form-field>
   </div>
 

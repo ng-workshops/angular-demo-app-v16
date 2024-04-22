@@ -69,9 +69,11 @@ export class CustomerComponent {
     </mat-icon>
   </button>
 </div>
-<div class="details" *ngIf="showDetails">
+@if (showDetails) {
+<div class="details">
   <app-customer-details></app-customer-details>
 </div>
+}
 ```
 
 ## src/app/customers/customers.module.ts
