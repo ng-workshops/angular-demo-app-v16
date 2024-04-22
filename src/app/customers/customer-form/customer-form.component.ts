@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Customer } from '../customer';
@@ -11,7 +11,7 @@ import { CustomerService } from '../customer.service';
   templateUrl: './customer-form.component.html',
   styleUrls: ['./customer-form.component.scss'],
 })
-export class CustomerFormComponent {
+export class CustomerFormComponent implements OnInit {
   form: FormGroup = Customer.toFormGroup();
 
   constructor(
