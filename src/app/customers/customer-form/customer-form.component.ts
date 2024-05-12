@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Customer } from '../customer';
@@ -11,28 +11,25 @@ import { MatInput } from '@angular/material/input';
 import { MatFormField, MatError } from '@angular/material/form-field';
 
 @Component({
-    selector: 'app-customer-form',
-    templateUrl: './customer-form.component.html',
-    styleUrls: ['./customer-form.component.scss'],
-    standalone: true,
-    imports: [
-        ReactiveFormsModule,
-        MatFormField,
-        MatInput,
-        MatError,
-        MatButton,
-        JsonPipe,
-    ],
+  selector: 'app-customer-form',
+  templateUrl: './customer-form.component.html',
+  styleUrls: ['./customer-form.component.scss'],
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    MatFormField,
+    MatInput,
+    MatError,
+    MatButton,
+    JsonPipe,
+  ],
 })
 export class CustomerFormComponent implements OnInit {
+  private snackBar = inject(MatSnackBar);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private customerService = inject(CustomerService);
   form: FormGroup = Customer.toFormGroup();
-
-  constructor(
-    private snackBar: MatSnackBar,
-    private route: ActivatedRoute,
-    private router: Router,
-    private customerService: CustomerService
-  ) {}
 
   ngOnInit() {
     this.form = Customer.toFormGroup();

@@ -1,5 +1,4 @@
-
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, output, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { ModalData } from './modal.model';
@@ -15,9 +14,7 @@ export class ModalComponent {
   @Input({ required: true })
   modal!: ModalData;
 
-  @Output()
-  closeIt = new EventEmitter();
+  closeIt = output();
 
-  @Output()
-  cancel = new EventEmitter();
+  cancel = output();
 }

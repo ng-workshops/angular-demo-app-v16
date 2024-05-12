@@ -1,4 +1,4 @@
-import { Component, ViewContainerRef } from '@angular/core';
+import { Component, ViewContainerRef, inject } from '@angular/core';
 import { HostElementService } from './shared/modal/host/host-element.service';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
@@ -10,10 +10,10 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
   imports: [RouterLink, RouterLinkActive, RouterOutlet],
 })
 export class AppComponent {
-  constructor(
-    hostElementService: HostElementService,
-    hostElement: ViewContainerRef
-  ) {
+  constructor() {
+    const hostElement = inject(ViewContainerRef);
+    const hostElementService = inject(HostElementService);
+
     hostElementService.setHost(hostElement);
   }
 }

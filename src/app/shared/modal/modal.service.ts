@@ -1,4 +1,4 @@
-import { Injectable, ViewContainerRef } from '@angular/core';
+import { Injectable, ViewContainerRef, inject } from '@angular/core';
 import { ModalComponent } from './modal.component';
 import { ModalData } from './modal.model';
 import { HostElementService } from './host/host-element.service';
@@ -8,7 +8,7 @@ import { Observable, map } from 'rxjs';
   providedIn: 'root',
 })
 export class ModalService {
-  constructor(private hostElementService: HostElementService) {}
+  private hostElementService = inject(HostElementService);
 
   open(data: ModalData, host: ViewContainerRef): ModalComponent {
     data.type = data.type || 'primary';

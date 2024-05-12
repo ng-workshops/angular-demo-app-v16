@@ -1,13 +1,12 @@
 import {
   Component,
-  EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
-  Output,
   SimpleChange,
   inject,
+  output,
 } from '@angular/core';
 
 import { MatCardModule } from '@angular/material/card';
@@ -38,13 +37,12 @@ export class InfoBoxComponent implements OnInit, OnChanges, OnDestroy {
     return this._name;
   }
 
-  @Output()
-  replyToParent = new EventEmitter<string>();
+  replyToParent = output<string>();
 
   ngOnInit() {
-    this.subscription = this.messageService.listener$.subscribe(
-      (msg) => (this.message = msg)
-    );
+    this.subscription = this.messageService.listener$.subscribe((msg) => {
+      this.message = msg;
+    });
   }
 
   ngOnChanges(changes: Record<string, SimpleChange>) {

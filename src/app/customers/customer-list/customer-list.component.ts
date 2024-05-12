@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Customer } from '../customer';
 import { CustomerService } from '../customer.service';
 import { Observable, Subject, merge } from 'rxjs';
@@ -19,22 +19,24 @@ import { MatInput } from '@angular/material/input';
 import { MatFormField } from '@angular/material/form-field';
 
 @Component({
-    selector: 'app-customer-list',
-    templateUrl: './customer-list.component.html',
-    styleUrls: ['./customer-list.component.scss'],
-    standalone: true,
-    imports: [
-        MatFormField,
-        MatInput,
-        ReactiveFormsModule,
-        MatIconButton,
-        MatIcon,
-        CustomerComponent,
-        CustomerDetailsComponent,
-        AsyncPipe,
-    ],
+  selector: 'app-customer-list',
+  templateUrl: './customer-list.component.html',
+  styleUrls: ['./customer-list.component.scss'],
+  standalone: true,
+  imports: [
+    MatFormField,
+    MatInput,
+    ReactiveFormsModule,
+    MatIconButton,
+    MatIcon,
+    CustomerComponent,
+    CustomerDetailsComponent,
+    AsyncPipe,
+  ],
 })
 export class CustomerListComponent {
+  private customerService = inject(CustomerService);
+  public router = inject(Router);
   searchTerm = new FormControl<string>('', { nonNullable: true });
 
   private search$: Observable<string> = this.searchTerm.valueChanges.pipe(
@@ -49,11 +51,6 @@ export class CustomerListComponent {
       return this.customerService.getAll(this.searchTerm.value);
     })
   );
-
-  constructor(
-    private customerService: CustomerService,
-    public router: Router
-  ) {}
 
   addNewCustomer() {
     this.router.navigateByUrl('/customers/new');

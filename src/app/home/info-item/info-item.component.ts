@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, output } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 
@@ -12,8 +12,7 @@ import { FormsModule } from '@angular/forms';
 export class InfoItemComponent {
   private _messageValue!: string;
 
-  @Output()
-  messageChange = new EventEmitter<string>();
+  messageChange = output<string>();
 
   @Input()
   get message() {
