@@ -56,8 +56,9 @@ export class CustomerListComponent implements OnInit {
 
 ```html
 <div class="customer">
-  <app-customer *ngFor="let customer of customers" [customer]="customer">
-  </app-customer>
+  @for (customer of customers; track customer.id) {
+  <app-customer [customer]="customer"> </app-customer>
+  }
 </div>
 ```
 

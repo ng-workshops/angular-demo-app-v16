@@ -6,6 +6,7 @@ import { Subscription, of } from 'rxjs';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CustomerService } from '../customer.service';
 import { Router } from '@angular/router';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('CustomerListComponent', () => {
   let component: CustomerListComponent;
@@ -24,10 +25,13 @@ describe('CustomerListComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      declarations: [CustomerListComponent],
+      imports: [CustomerListComponent, NoopAnimationsModule],
       providers: [
         { provide: Router, useValue: routerMock },
-        { provide: CustomerService, useValue: customerServiceMock },
+        {
+          provide: CustomerService,
+          useValue: customerServiceMock,
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     });

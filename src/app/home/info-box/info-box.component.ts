@@ -9,7 +9,7 @@ import {
   SimpleChange,
   inject,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MatCardModule } from '@angular/material/card';
 import { Subscription } from 'rxjs';
 import { MessageService } from '../message.service';
@@ -17,7 +17,7 @@ import { MessageService } from '../message.service';
 @Component({
   selector: 'app-info-box',
   standalone: true,
-  imports: [CommonModule, MatCardModule],
+  imports: [MatCardModule],
   templateUrl: './info-box.component.html',
   styleUrls: ['./info-box.component.scss'],
 })

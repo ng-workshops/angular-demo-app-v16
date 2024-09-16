@@ -11,10 +11,10 @@ describe('CustomerComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CustomerComponent, CustomerStatusPipe],
-      providers: [{ provide: Router, useValue: {} }],
-      schemas: [NO_ERRORS_SCHEMA],
-    });
+    imports: [CustomerComponent, CustomerStatusPipe],
+    providers: [{ provide: Router, useValue: {} }],
+    schemas: [NO_ERRORS_SCHEMA],
+});
     fixture = TestBed.createComponent(CustomerComponent);
     component = fixture.componentInstance;
     component.customer = {

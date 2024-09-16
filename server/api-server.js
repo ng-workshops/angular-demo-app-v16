@@ -12,7 +12,7 @@ const apiRouter = new express.Router();
 const latency = process.env.latency || 0;
 // const simulateErrors = !!(process.env.simulateErrors || false);
 
-module.exports = PORT => {
+module.exports = (PORT) => {
   const app = express();
 
   // docker switch
@@ -20,7 +20,11 @@ module.exports = PORT => {
     console.log('PORT', PORT);
 
     app.use(compression());
-    app.use(express.static(path.join(__dirname, '..', 'dist')));
+    app.use(
+      express.static(
+        path.join(__dirname, '..', 'dist', 'angular-demo-app', 'browser')
+      )
+    );
   } else {
     PORT += 1;
   }

@@ -1,10 +1,17 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import {
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+  provideRouter,
+} from '@angular/router';
 
 describe('AppComponent', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
-      declarations: [AppComponent],
+      imports: [AppComponent, RouterLink, RouterLinkActive, RouterOutlet],
+      providers: [provideRouter([])],
     })
   );
 

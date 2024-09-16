@@ -24,22 +24,22 @@ describe('CustomerFormComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      declarations: [CustomerFormComponent],
-      imports: [
+    imports: [
         MatInputModule,
         MatSnackBarModule,
         ReactiveFormsModule,
         NoopAnimationsModule,
         RouterModule,
         HttpClientModule,
-      ],
-      providers: [
+        CustomerFormComponent,
+    ],
+    providers: [
         { provide: ActivatedRoute, useValue: routeMock },
         { provide: Router, useValue: {} },
         { provide: CustomerService, useValue: {} },
         { provide: MatSnackBar, useValue: {} },
-      ],
-    }).compileComponents();
+    ],
+}).compileComponents();
   }));
 
   beforeEach(() => {
