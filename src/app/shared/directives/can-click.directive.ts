@@ -1,18 +1,21 @@
 import {
   Directive,
   ElementRef,
-  EventEmitter,
   HostBinding,
   HostListener,
   Input,
-  Output,
   Renderer2,
+  inject,
+  output,
 } from '@angular/core';
 
 @Directive({
   selector: '[appCanClick]',
+  standalone: true,
 })
 export class CanClickDirective {
+  private element = inject(ElementRef);
+  private renderer = inject(Renderer2);
   @HostBinding('class.app-disabled') isDisabled = true;
 
   @Input()
@@ -25,10 +28,7 @@ export class CanClickDirective {
     );
   }
 
-  @Output()
-  action = new EventEmitter();
-
-  constructor(private element: ElementRef, private renderer: Renderer2) {}
+  action = output<MouseEvent>();
 
   @HostListener('click', ['$event']) onClick(e: MouseEvent) {
     if (this.isDisabled) {

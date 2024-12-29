@@ -1,19 +1,18 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, output } from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-info-item',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './info-item.component.html',
   styleUrls: ['./info-item.component.scss'],
 })
 export class InfoItemComponent {
   private _messageValue!: string;
 
-  @Output()
-  messageChange = new EventEmitter<string>();
+  messageChange = output<string>();
 
   @Input()
   get message() {

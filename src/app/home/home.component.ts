@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild, ViewContainerRef, inject } from '@angular/core';
+import { Component, ViewContainerRef, inject, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ModalService } from '../shared/modal/modal.service';
 import { InfoBoxComponent } from './info-box/info-box.component';
@@ -22,8 +22,7 @@ export class HomeComponent {
   name = 'START_';
   reply = '';
 
-  @ViewChild('child')
-  private child!: InfoBoxComponent;
+  private child = viewChild<InfoBoxComponent>('child');
 
   changeChild() {
     this.message = new Date().toISOString();
@@ -35,7 +34,7 @@ export class HomeComponent {
   }
 
   processReplyFromCode() {
-    this.child.reply('Send from parent via CODE');
+    this.child()?.reply('Send from parent via CODE');
   }
 
   sendMessage() {
@@ -52,7 +51,7 @@ export class HomeComponent {
       console.log('MODAL closed');
     });
 
-    modal.cancel.subscribe(() => {
+    modal.cancelIt.subscribe(() => {
       console.log('MODAL cancelled');
     });
   }

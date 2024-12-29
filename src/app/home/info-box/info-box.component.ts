@@ -1,15 +1,14 @@
 import {
   Component,
-  EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
-  Output,
   SimpleChange,
   inject,
+  output,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MatCardModule } from '@angular/material/card';
 import { Subscription } from 'rxjs';
 import { MessageService } from '../message.service';
@@ -17,7 +16,7 @@ import { MessageService } from '../message.service';
 @Component({
   selector: 'app-info-box',
   standalone: true,
-  imports: [CommonModule, MatCardModule],
+  imports: [MatCardModule],
   templateUrl: './info-box.component.html',
   styleUrls: ['./info-box.component.scss'],
 })
@@ -38,13 +37,12 @@ export class InfoBoxComponent implements OnInit, OnChanges, OnDestroy {
     return this._name;
   }
 
-  @Output()
-  replyToParent = new EventEmitter<string>();
+  replyToParent = output<string>();
 
   ngOnInit() {
-    this.subscription = this.messageService.listener$.subscribe(
-      (msg) => (this.message = msg)
-    );
+    this.subscription = this.messageService.listener$.subscribe((msg) => {
+      this.message = msg;
+    });
   }
 
   ngOnChanges(changes: Record<string, SimpleChange>) {

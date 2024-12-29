@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Customer } from './customer';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
@@ -7,9 +7,8 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class CustomerService {
+  private httpClient = inject(HttpClient);
   private readonly endpoint = environment.endpoints.customers;
-
-  constructor(private httpClient: HttpClient) {}
 
   getById(id: string | null) {
     return this.httpClient.get<Customer>(`${this.endpoint}/${id}`);

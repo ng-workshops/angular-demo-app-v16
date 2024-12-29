@@ -54,13 +54,11 @@
 ## src/app/customers/customer/customer.component.html
 
 ```html
-...
-
-<div class="details" *ngIf="showDetails">
+@if (showDetails) {
+<div class="details">
   <ng-content></ng-content>
 </div>
-
-...
+}
 ```
 
 ## src/app/customers/customer-list/customer-list.component.html
@@ -69,13 +67,11 @@
 ...
 
 <div class="customer">
-  <app-customer
-    *ngFor="let customer of customers$ | async"
-    [customer]="customer"
-    (deleteCustomer)="deleteCustomer($event)"
-  >
+  @for (customer of customers$ | async; track customer.id) {
+  <app-customer [customer]="customer" (deleteCustomer)="deleteCustomer($event)">
     <app-customer-details></app-customer-details>
   </app-customer>
+  }
 </div>
 
 ...
