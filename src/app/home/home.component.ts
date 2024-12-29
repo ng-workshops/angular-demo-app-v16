@@ -51,7 +51,7 @@ export class HomeComponent {
       console.log('MODAL closed');
     });
 
-    modal.cancel.subscribe(() => {
+    modal.cancelIt.subscribe(() => {
       console.log('MODAL cancelled');
     });
   }

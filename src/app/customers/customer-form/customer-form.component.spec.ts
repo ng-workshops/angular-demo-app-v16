@@ -2,7 +2,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CustomerFormComponent } from './customer-form.component';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
@@ -24,21 +24,19 @@ describe('CustomerFormComponent', () => {
     };
 
     TestBed.configureTestingModule({
-    imports: [
-        MatInputModule,
+    imports: [MatInputModule,
         MatSnackBarModule,
         ReactiveFormsModule,
         NoopAnimationsModule,
         RouterModule,
-        HttpClientModule,
-        CustomerFormComponent,
-    ],
+        CustomerFormComponent],
     providers: [
         { provide: ActivatedRoute, useValue: routeMock },
         { provide: Router, useValue: {} },
         { provide: CustomerService, useValue: {} },
         { provide: MatSnackBar, useValue: {} },
-    ],
+        provideHttpClient(withInterceptorsFromDi()),
+    ]
 }).compileComponents();
   }));
 

@@ -16,5 +16,5 @@ export class ModalComponent {
 
   closeIt = output();
 
-  cancel = output();
+  cancelIt = output();
 }

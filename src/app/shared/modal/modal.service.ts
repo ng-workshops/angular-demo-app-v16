@@ -28,7 +28,7 @@ export class ModalService {
 
     modal.instance.modal = data;
     modal.instance.closeIt.subscribe(() => modal.destroy());
-    modal.instance.cancel.subscribe(() => modal.destroy());
+    modal.instance.cancelIt.subscribe(() => modal.destroy());
 
     return modal.instance;
   }

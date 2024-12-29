@@ -10,7 +10,7 @@
     <mat-card-title>{{ modal.title }}</mat-card-title>
     <mat-card-content>{{ modal.message }}</mat-card-content>
     <mat-card-content class="footer">
-      <button (click)="cancel.emit()" mat-raised-button color="basic">
+      <button (click)="cancelIt.emit()" mat-raised-button color="basic">
         Ähm No
       </button>
       <button (click)="closeIt.emit()" mat-raised-button [color]="modal.type">
